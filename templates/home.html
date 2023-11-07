@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="container" id="commandez">
+  <div class="row">
+    <h1 class="text-center text-primary">Commandez votre produit</h1>
+    <div class="container-md">
+      <form action="{% url 'order' %}" method="POST">
+        {% csrf_token %}
+        <div class="row fw-bolder mb-2 gx-2">
+          <div class="col">
+            <label for="prenom">Prénom</label>
+            <input type="text" name="prenom" class="form-control rounded-pill" required>
+          </div>
+          <div class="col">
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" class="form-control rounded-pill" required>
+          </div>
+
+        </div>
+        <div class="row  fw-bolder mb-2 gx-2">
+          <div class="col">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control rounded-pill" required>
+          </div>
+          <div class="col">
+            <label for="ville">Ville</label>
+            <input type="text" name="ville" class="form-control rounded-pill" required>
+          </div>
+        </div>
+        <div class="row  fw-bolder mb-2 gx-2">
+          <div class="col">
+            <div class="form-group">
+              <label for="code_postal">Code Postal</label>
+              <input type="text" name="code_postal" class="form-control rounded-pill">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="telephone">Téléphone</label>
+              <input type="tel" name="telephone" class="form-control rounded-pill" required>
+            </div>
+          </div>
+        </div>
+        <div class="row  fw-bolder mb-2 gx-2">
+          <div class="col">
+            <div class="form-group">
+              <label for="pays">Pays</label>
+              <!-- <input type="text" class="form-control rounded-pill"> -->
+              <select class="form-control rounded-pill" required name="pays" id="countries"></select>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <label for="quantite">Quantité</label>
+              <select name="quantite" required id="select" class="form-control rounded-pill">
+
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row  fw-bolder mb-2 gx-2">
+          <div class="form-group">
+            <button class="btn btn-primary form-control rounded-pill" type="submit">Commandez</button>
+          </div>
+
+
+      </form>
+    </div>
+  </div>
+</div>
+<hr class="featurette-divider">
+<div class="container mt-10" id="clients" style=" height: 200px;width: 50%;">
+  <h1 class="text-center text-primary mt-10">Nos Clients</h1>
+  <div id="carouselIds" class="carousel slide mt-5" data-bs-ride="carousel">
+    <div class="carousel-inner mt-5">
+      {% for comment in comments %}
+      {% if forloop.first %}
+      <div class="carousel-item text-center {% if forloop.first %} active {% endif %}">
+        <div class="card-body">
+          <h5 class="card-title">{{comment.nom}}</h5>
+          <p class="card-text">{{comment.avis}}</p>
+        </div>
+      </div> 
+      {% else %}
+      <div class="carousel-item text-center {% if forloop.first %} active {% endif %}">
+        <div class="card-body">
+          <h5 class="card-title">Nom: {{comment.nom}}</h5>
+          <p class="card-text">Avis: {{comment.avis}}</p>
+        </div>
+      </div> 
+      {% endif %}
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselIds" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselIds" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>  
+      {%endfor%}
+    </div>
+     
+  </div>
+ 
+</div>
+
+<hr class="featurette-divider">
+<div class="row featurette gx-4">
+  <h1 class="text-center text-primary" id="livraison">Livraison</h1>
+  <div class="col-md-9">
+    <h3 class="">Vous avez 2 possibilités, en fonction de la disponibilité du service de livraison dans votre pays:</h3>
+    <li class="lead">Livraison à domicile par notre agent .Dans ce cas, vous devrez payer au agent au moment de la
+      réception.</li>
+    <li class="lead">Ceux qui vivent dans des régions très éloignées de la capitale, a ce cas, vous devez envoyer
+      l'argent a la compte du agent avant vous envoyer le produit. Vous avez notre garantie de recevoir le Gel après le
+      paiement.</li>
+  </div>
+  <div class="col-md-3 justify-content">
+    <img style="height:max-content" src="{% static 'images/livraison.png' %}" alt="">
+  </div>
+</div>
+
+<hr class="featurette-divider">
+<div class="row featurette">
+  <h1 class="text-center text-primary" id="contacts">Nos Contacts</h1>
+  <div class="col-md-9 order-md-2">
+    <li class="lead"> Senegal Hassan +221 784403914</li>
+    <li class="lead"> Cameroun ABDOULAYE +237 655197985</li>
+    <li class="lead"> Gabon Nasser +241 07903670 / 05128251</li>
+    <li class="lead"> Benin Gefono World +229 95701127 / 62940094</li>
+  </div>
+  <div class="col-md-3 order-md-1">
+    <img style="height:max-content" src="{% static 'images/contacts.png' %}" alt="">
+  </div>
+</div>
+
+<hr class="featurette-divider">
+<h1 class="text-center text-primary">Votre avis</h1>
+<form action="{% url 'comment' %}" method="POST">
+  {% csrf_token %}
+  <div class="container g-3" id="avis">
+    <div class="row fw-bolder mb-2 gx-2">
+      <div class="col">
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" required class="form-control rounded-pill">
+      </div>
+      <div class="col">
+        <label for="email">Email</label>
+        <input type="email" name="email" required class="form-control rounded-pill">
+      </div>
+    </div>
+    <div class="row fw-bolder mb-2 gx-2">
+      <div class="col">
+        <label for="avis">Avis</label>
+        <textarea rows="2" name="avis" required cols="50" class="form-control rounded-pill"></textarea>
+      </div>
+    </div>
+    <div class="row  fw-bolder mb-2 gx-2">
+      <div class="form-group">
+        <button class="btn btn-primary rounded-pill form-control" type="submit">Envoyer</button>
+      </div>
+    </div>
+</form>
+{% endblock %}
